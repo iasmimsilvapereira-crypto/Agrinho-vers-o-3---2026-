@@ -1,0 +1,388 @@
+### 2. `style.css`
+```css
+/* ==========================================================================
+   VARIÁVEIS CONFIGURÁVEIS (DESIGN SYSTEM)
+   ========================================================================== */
+:root {
+    /* Paleta de Cores Obrigatória */
+    --cor-azul: #004B87;
+    --cor-azul-celeste: #4192D9;
+    --cor-azul-metalico: #4682B4;
+    --cor-verde: #2E7D32;
+    --cor-amarelo: #FBC02D;
+    --cor-ouro: #D4AF37;
+    --cor-preto: #1A1A1A;
+
+    /* Cores de Suporte e Fundo */
+    --cor-fundo-claro: #F8F9FA;
+    --cor-fundo-card: #FFFFFF;
+    --cor-texto-claro: #333333;
+    --cor-texto-mutado: #666666;
+    --cor-borda: #E0E0E0;
+
+    /* Fontes Fluidas (Ajustáveis por Acessibilidade) */
+    --base-font-size: 100%; /* Permite controle dinâmico por JS */
+    --fonte-principal: 'Segoe UI', system-ui, -apple-system, sans-serif;
+
+    /* Configurações Gerais Modificáveis */
+    --arredondamento: 12px;
+    --sombra-suave: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --sombra-profunda: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --transicao: all 0.3s ease;
+    
+    /* Espaçamentos e Margens Fluidas via clamp() */
+    --espacamento-secao: clamp(3rem, 6vw, 6rem);
+    --padding-card: clamp(1.25rem, 3vw, 2.5rem);
+}
+
+/* Variáveis para o Tema Escuro */
+[data-theme="dark"] {
+    --cor-fundo-claro: #121212;
+    --cor-fundo-card: #1E1E1E;
+    --cor-texto-claro: #E0E0E0;
+    --cor-texto-mutado: #A0A0A0;
+    --cor-borda: #333333;
+    --cor-azul: #1E88E5;
+    --cor-azul-metalico: #64B5F6;
+    --cor-verde: #4CAF50;
+}
+
+/* ==========================================================================
+   RESETS E CONFIGURAÇÕES GERAIS
+   ========================================================================== */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: var(--base-font-size);
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--fonte-principal);
+    background-color: var(--cor-fundo-claro);
+    color: var(--cor-texto-claro);
+    line-height: 1.6;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.container {
+    width: 100%;
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: clamp(1rem, 5vw, 4rem);
+    padding-right: clamp(1rem, 5vw, 4rem);
+}
+
+/* Utilitário de Acessibilidade */
+.sr-only, .sr-only-focusable:not(:focus) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* ==========================================================================
+   PAINEL FLUTUANTE DE ACESSIBILIDADE
+   ========================================================================== */
+.painel-acessibilidade {
+    position: fixed;
+    top: 50%;
+    left: 1rem;
+    transform: translateY(-50%);
+    background-color: var(--cor-fundo-card);
+    border: 2px solid var(--cor-azul-metalico);
+    border-radius: var(--arredondamento);
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 1000;
+    box-shadow: var(--sombra-profunda);
+}
+
+.painel-acessibilidade button {
+    background-color: var(--cor-fundo-claro);
+    color: var(--cor-texto-claro);
+    border: 1px solid var(--cor-borda);
+    padding: 0.75rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: var(--transicao);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+}
+
+.painel-acessibilidade button:hover:not(:disabled),
+.painel-acessibilidade button:focus {
+    background-color: var(--cor-azul);
+    color: white;
+    outline: 2px solid var(--cor-amarelo);
+}
+
+.painel-acessibilidade button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* ==========================================================================
+   HEADER / MENU
+   ========================================================================== */
+.topo-pagina {
+    background-color: var(--cor-fundo-card);
+    border-bottom: 3px solid var(--cor-verde);
+    position: sticky;
+    top: 0;
+    z-index: 900;
+    box-shadow: var(--sombra-suave);
+}
+
+.container-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--cor-verde);
+    letter-spacing: -0.5px;
+}
+
+.logo span {
+    color: var(--cor-azul);
+}
+
+.menu-navegacao {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+}
+
+.menu-navegacao a {
+    color: var(--cor-texto-claro);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: var(--transicao);
+    padding: 0.5rem 0.75rem;
+    border-radius: 4px;
+}
+
+.menu-navegacao a:hover,
+.menu-navegacao a:focus {
+    color: var(--cor-verde);
+    background-color: rgba(46, 125, 50, 0.08);
+}
+
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
+.secao-hero {
+    background: linear-gradient(135deg, rgba(0, 75, 135, 0.95), rgba(46, 125, 50, 0.85)), 
+                repeating-linear-gradient(45deg, rgba(0,0,0,0.05) 0px, rgba(0,0,0,0.05) 2px, transparent 2px, transparent 10px);
+    color: white;
+    padding: clamp(4rem, 10vw, 8rem) 0;
+    text-align: center;
+    border-bottom: 5px solid var(--cor-ouro);
+}
+
+.conteudo-hero h1 {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.conteudo-hero p {
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    color: var(--cor-amarelo);
+    font-weight: 500;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ==========================================================================
+   ESTILOS DE IMAGEM OBRIGATÓRIOS DO LAYOUT
+   ========================================================================== */
+.imagem {
+    width: 100%;
+    overflow: hidden;
+    border-radius: var(--arredondamento);
+    box-shadow: var(--sombra-suave);
+    transition: var(--transicao);
+}
+
+.imagem img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: var(--transicao);
+    aspect-ratio: 16 / 10;
+    background-color: var(--cor-azul-metalico); /* Fallback visual decorativo */
+}
+
+/* Efeito Hover Suave Premium requisitado */
+.imagem:hover {
+    box-shadow: var(--sombra-profunda);
+    transform: translateY(-4px);
+}
+
+.imagem:hover img {
+    scale: 1.03;
+}
+
+/* ==========================================================================
+   SEÇÕES DE CONTEÚDO (INTRODUÇÃO E CARDS)
+   ========================================================================== */
+.secao-introducao {
+    padding-top: var(--espacamento-secao);
+    padding-bottom: var(--espacamento-secao);
+    display: grid;
+    grid-template-columns: minmax(300px, 1fr) minmax(300px, 1fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+}
+
+.texto-introducao h2 {
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    color: var(--cor-azul);
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.texto-introducao p {
+    margin-bottom: 1rem;
+    color: var(--cor-texto-claro);
+}
+
+/* Seção de Cards Genéricos */
+.secao-cards {
+    padding-bottom: var(--espacamento-secao);
+    display: grid;
+    grid-template-columns: minmax(300px, 1fr) minmax(300px, 1fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+}
+
+.secao-cards.invertido .card-informativo {
+    grid-column: 1;
+}
+.secao-cards.invertido .imagem {
+    grid-column: 2;
+}
+
+.card-informativo {
+    background-color: var(--cor-fundo-card);
+    padding: var(--padding-card);
+    border-radius: var(--arredondamento);
+    box-shadow: var(--sombra-suave);
+    border-left: 5px solid var(--cor-verde);
+}
+
+.card-informativo h2 {
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    color: var(--cor-verde);
+    margin-bottom: 1rem;
+}
+
+/* ==========================================================================
+   ACCORDION (SEÇÕES EXPANSÍVEIS VISUALMENTE FORTES)
+   ========================================================================== */
+.secao-pilares {
+    background-color: var(--cor-fundo-card);
+    padding: var(--espacamento-secao) 0;
+    border-top: 1px solid var(--cor-borda);
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.subtitulo-secao {
+    margin-bottom: 2rem;
+    color: var(--cor-texto-mutado);
+    max-width: 800px;
+}
+
+.accordion-grupo {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.accordion-item {
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    background-color: var(--cor-fundo-claro);
+    transition: var(--transicao);
+}
+
+.accordion-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    background: none;
+    border: none;
+    color: var(--cor-preto);
+    font-size: 1.15rem;
+    font-weight: 700;
+    text-align: left;
+    cursor: pointer;
+    transition: var(--transicao);
+}
+
+[data-theme="dark"] .accordion-header {
+    color: var(--cor-texto-claro);
+}
+
+.accordion-header:hover, .accordion-header:focus {
+    background-color: rgba(0, 75, 135, 0.08);
+    color: var(--cor-azul);
+    outline: none;
+}
+
+.accordion-header .icone-status {
+    font-size: 1.5rem;
+    color: var(--cor-azul-metalico);
+    transition: transform 0.3s ease;
+}
+
+/* Estado Aberto */
+.accordion-item.ativo {
+    border-color: var(--cor-azul);
+    box-shadow: var(--sombra-suave);
+}
+.accordion-item.ativo .accordion-header {
+    background-color: var(--cor-azul);
+    color: white;
+}
+.accordion-item.ativo .icone-status {
+    transform: rotate(45deg);
+    color: white;
+}
+
+.accordion-content {
+    padding: 0 1.5rem;
+    max-height: 0;
+    overflow: hidden;
